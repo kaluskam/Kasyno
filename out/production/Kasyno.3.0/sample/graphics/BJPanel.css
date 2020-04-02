@@ -1,0 +1,10 @@
+.button {
+    -fx-background-color: #980902;
+    -fx-border-radius: 25px;
+    -fx-padding: 0pt;
+    -fx-text-fill: #fbc82c;
+    -fx-font-family: Windlass;
+    -fx-font-size: 20pt;
+    -fx-min-width: 35pt;
+    -fx-min-height: 35pt;
+}

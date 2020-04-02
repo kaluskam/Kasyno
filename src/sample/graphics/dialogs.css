@@ -1,0 +1,50 @@
+.dialog-pane{
+   -fx-background-color: #edb985;
+ }
+
+ .dialog-pane:header *.header-panel{
+     -fx-background-color: #edb985;
+ }
+
+ .dialog-pane > *.label.content {
+     -fx-font-size: 15pt;
+ }
+
+ .dialog-pane:header *.header-panel *.label{
+      -fx-font-family: Windlass;
+      -fx-font-size: 15pt;
+  }
+
+ .dialog-pane > *.button {
+     -fx-background-color: radial-gradient(center 50% 50%, radius 100%, #ffffff, #edb985);
+     -fx-text-fill: #40190b;
+     -fx-font-family: Windlass;
+     -fx-font-size: 10pt;
+     -fx-max-width: 60pt;
+ }
+
+ .label {
+     -fx-font-family: Windlass;
+     -fx-font-size: 15pt;
+     -fx-text-fill: #40190b;
+ }
+
+ .text-field {
+     -fx-background-color: radial-gradient(center 50% 50%, radius 100%, #ffffff, #edb985);
+     -fx-text-fill: #40190b;
+     -fx-font-family: Windlass;
+     -fx-font-size: 15pt;
+     -fx-min-width: 100pt;
+     -fx-min-height: 30pt;
+ }
+
+ .button {
+     -fx-background-color: radial-gradient(center 50% 50%, radius 100%, #ffffff, #edb985);
+     -fx-text-fill: #40190b;
+     -fx-font-family: Windlass;
+     -fx-font-size: 12pt;
+     -fx-min-width: 50pt;
+     -fx-min-height: 30pt;
+ }
+
+
