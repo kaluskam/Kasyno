@@ -52,4 +52,8 @@ public class Player {
         String strTokens = String.valueOf(tokens).toString();
         return nickName + " " + strMoney + " " + strTokens;
     }
+
+    public void addMoney(int Money) {
+        money += Money;
+    }
 }

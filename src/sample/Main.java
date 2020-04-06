@@ -97,6 +97,22 @@ public class Main extends Application {
             }
         });
 
+        topUpAccount.setOnAction(e -> {
+            try {
+                topUpAccount();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
+        buyTokens.setOnAction(e -> {
+            try {
+                buyTokens();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+
         layout.setAlignment(Pos.CENTER);
         Scene scene = new Scene(layout, 800, 600);
         window.setScene(scene);
@@ -317,8 +333,6 @@ public class Main extends Application {
         return canvas;
     }
 
-
-
     private void dealerCards(BorderPane layout, Scene scene) throws IOException {
         double width = window.getScene().getWidth();
         double height = window.getScene().getHeight() - layout.getBottom().getScene().getHeight();
@@ -524,4 +538,97 @@ public class Main extends Application {
         window.setScene(scene);
         window.show();
     }
+
+    private void topUpAccount() throws IOException {
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle("Casino");
+        dialog.setResizable(true);
+
+        Label lblMoney = new Label("Money: ");
+        TextField txtMoney = new TextField();
+        Label message = new Label("");
+
+        DialogPane dialogPane = dialog.getDialogPane();
+
+        GridPane grid = new GridPane();
+        dialogPane.getStylesheets().add(getClass().getResource("graphics/dialogs.css").toExternalForm());
+        grid.add(lblMoney, 1, 1);
+        grid.add(txtMoney, 2, 1);
+        grid.add(message, 1, 2);
+        dialog.getDialogPane().setContent(grid);
+
+        ButtonType buttonTypeSubmit = new ButtonType("Top Up", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().add(buttonTypeSubmit);
+
+        dialog.setResultConverter((Callback<ButtonType, String>) btn -> {
+            if (btn == buttonTypeSubmit) {
+                return new String(txtMoney.getText());
+            }
+            return null;
+        });
+
+        Optional<String> result = dialog.showAndWait();
+        int money = 0;
+        String strMoney = "";
+        if (result.isPresent()) {
+            strMoney = result.get();
+            money = Integer.parseInt(strMoney);
+            currentPlayer.addMoney(money);
+            casino.refreshPlayer(currentPlayer);
+        }
+
+    }
+
+    private void buyTokens() throws IOException {
+        Dialog<String> dialog = new Dialog<>();
+        dialog.setTitle("Casino");
+        dialog.setResizable(true);
+
+        Label lblTokens = new Label("Tokens: ");
+        TextField txtTokens = new TextField();
+        Label message = new Label("");
+
+        DialogPane dialogPane = dialog.getDialogPane();
+
+        GridPane grid = new GridPane();
+        dialogPane.getStylesheets().add(getClass().getResource("graphics/dialogs.css").toExternalForm());
+        grid.add(lblTokens, 1, 1);
+        grid.add(txtTokens, 2, 1);
+        grid.add(message, 1, 2);
+        dialog.getDialogPane().setContent(grid);
+
+        ButtonType buttonTypeSubmit = new ButtonType("Submit", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().add(buttonTypeSubmit);
+
+        dialog.setResultConverter((Callback<ButtonType, String>) btn -> {
+            if (btn == buttonTypeSubmit) {
+                return new String(txtTokens.getText());
+            }
+            return null;
+        });
+
+        Optional<String> result = dialog.showAndWait();
+        int tokens = 0;
+        int cost = 0;
+        String strTokens = "";
+        if (result.isPresent()) {
+            strTokens = result.get();
+            tokens = Integer.parseInt(strTokens);
+            cost = tokens * 5;
+            if (cost > currentPlayer.getMoney()) {
+                message.setText("You do not have enough money.");
+            }
+            else if (tokens > casino.getTotalTokens()) {
+                message.setText("We are sorry, we do not have enough tokens.");
+            }
+            else {
+                currentPlayer.addMoney(-cost);
+                currentPlayer.addTokens(tokens);
+                casino.subtractTokens(tokens);
+                casino.refreshPlayer(currentPlayer);
+            }
+        }
+    }
+
 }
+

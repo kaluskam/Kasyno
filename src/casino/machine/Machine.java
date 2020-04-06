@@ -1,5 +1,7 @@
 package casino.machine;
 
+import casino.machine.BlackJack.BlackJack2;
+
 public class Machine {
     private int tokens = 1000;
     private boolean ON = false;
@@ -9,7 +11,7 @@ public class Machine {
 
     public Object runGame(String gameName, int bet, int leftTokens) {
         if (gameName.equals("BlackJack")) {
-            BlackJack game = new BlackJack(bet, leftTokens);
+            BlackJack2 game = new BlackJack2(bet, leftTokens);
             return game;
         }
         return null;

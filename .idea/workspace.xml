@@ -5,20 +5,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Kasyno.3.0/casino/Casino.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kasyno.3.0/casino/Casino.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Kasyno.3.0/casino/PlayersBase" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kasyno.3.0/casino/PlayersBase" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kasyno.3.0/casino/machine/BlackJack/BJplayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kasyno.3.0/casino/machine/BlackJack/BJplayer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kasyno.3.0/casino/machine/BlackJack/BlackJack.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kasyno.3.0/casino/machine/BlackJack/BlackJack.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kasyno.3.0/casino/machine/BlackJack/Card.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kasyno.3.0/casino/machine/BlackJack/Card.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kasyno.3.0/casino/machine/BlackJack/Deck.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kasyno.3.0/casino/machine/BlackJack/Deck.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kasyno.3.0/casino/machine/BlackJack/BJplayer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Kasyno.3.0/casino/machine/BlackJack/BlackJack.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Kasyno.3.0/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kasyno.3.0/sample/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Kasyno.3.0/sample/graphics/BJPanel.css" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Kasyno.3.0/sample/graphics/BJPanel.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/casino/Casino.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/casino/Casino.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/casino/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/casino/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/casino/PlayersBase" beforeDir="false" afterPath="$PROJECT_DIR$/src/casino/PlayersBase" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/casino/machine/BlackJack/BJplayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/casino/machine/BlackJack/BJplayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/casino/machine/BlackJack/BlackJack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/casino/machine/BlackJack/BlackJack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/casino/machine/BlackJack/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/casino/machine/BlackJack/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/casino/machine/BlackJack/Deck.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/casino/machine/BlackJack/Deck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/casino/machine/Machine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/casino/machine/Machine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sample/graphics/BJPanel.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/sample/graphics/BJPanel.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +80,6 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/src/casino/Casino.java" root0="SKIP_INSPECTION" />
     <setting file="file://$PROJECT_DIR$/src/sample/Main.java" root0="SKIP_INSPECTION" />
-    <setting file="file://$PROJECT_DIR$/src/casino/machine/BlackJack/BlackJack.java" root0="SKIP_INSPECTION" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectId" id="1ZhsctgxXlWNb1sM13mM6lPy5Dt" />
@@ -276,28 +268,28 @@
     </state>
     <state x="389" y="105" key="FileChooserDialogImpl/0.0.1366.728/1366.-426.1920.1040@0.0.1366.728" timestamp="1585832038129" />
     <state x="389" y="105" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1585498550292" />
-    <state width="1323" height="199" key="GridCell.Tab.0.bottom" timestamp="1586167421382">
+    <state width="1323" height="199" key="GridCell.Tab.0.bottom" timestamp="1586169836743">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="199" key="GridCell.Tab.0.bottom/0.0.1366.728/1366.-426.1920.1040@0.0.1366.728" timestamp="1586167421381" />
+    <state width="1323" height="199" key="GridCell.Tab.0.bottom/0.0.1366.728/1366.-426.1920.1040@0.0.1366.728" timestamp="1586169836743" />
     <state width="1877" height="319" key="GridCell.Tab.0.bottom/0.0.1366.728/1366.-426.1920.1040@1366.-426.1920.1040" timestamp="1585766632117" />
     <state width="1323" height="199" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1586107633412" />
-    <state width="1323" height="199" key="GridCell.Tab.0.center" timestamp="1586167421381">
+    <state width="1323" height="199" key="GridCell.Tab.0.center" timestamp="1586169836743">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="199" key="GridCell.Tab.0.center/0.0.1366.728/1366.-426.1920.1040@0.0.1366.728" timestamp="1586167421381" />
+    <state width="1323" height="199" key="GridCell.Tab.0.center/0.0.1366.728/1366.-426.1920.1040@0.0.1366.728" timestamp="1586169836743" />
     <state width="1877" height="319" key="GridCell.Tab.0.center/0.0.1366.728/1366.-426.1920.1040@1366.-426.1920.1040" timestamp="1585766632117" />
     <state width="1323" height="199" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1586107633411" />
-    <state width="1323" height="199" key="GridCell.Tab.0.left" timestamp="1586167421381">
+    <state width="1323" height="199" key="GridCell.Tab.0.left" timestamp="1586169836742">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="199" key="GridCell.Tab.0.left/0.0.1366.728/1366.-426.1920.1040@0.0.1366.728" timestamp="1586167421381" />
+    <state width="1323" height="199" key="GridCell.Tab.0.left/0.0.1366.728/1366.-426.1920.1040@0.0.1366.728" timestamp="1586169836742" />
     <state width="1877" height="319" key="GridCell.Tab.0.left/0.0.1366.728/1366.-426.1920.1040@1366.-426.1920.1040" timestamp="1585766632117" />
     <state width="1323" height="199" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1586107633411" />
-    <state width="1323" height="199" key="GridCell.Tab.0.right" timestamp="1586167421381">
+    <state width="1323" height="199" key="GridCell.Tab.0.right" timestamp="1586169836743">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="199" key="GridCell.Tab.0.right/0.0.1366.728/1366.-426.1920.1040@0.0.1366.728" timestamp="1586167421381" />
+    <state width="1323" height="199" key="GridCell.Tab.0.right/0.0.1366.728/1366.-426.1920.1040@0.0.1366.728" timestamp="1586169836743" />
     <state width="1877" height="319" key="GridCell.Tab.0.right/0.0.1366.728/1366.-426.1920.1040@1366.-426.1920.1040" timestamp="1585766632117" />
     <state width="1323" height="199" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1586107633411" />
     <state x="163" y="0" key="SettingsEditor" timestamp="1585918784580">
