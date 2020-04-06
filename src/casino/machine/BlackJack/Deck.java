@@ -33,6 +33,15 @@ public class Deck {
         return output;
     }
 
+    public Card[] splitDeck() {
+        deck[0] = new Card("2", 2, 'H');
+        deck[1] = new Card("2", 2, 'D');
+        deck[4] = new Card("2", 2, 'C');
+        deck[5] = new Card("2", 2, 'S');
+        return deck;
+
+    }
+
     public Card[] getDeck() {
         return deck;
     }

@@ -6,6 +6,7 @@ public class Card {
     private char color;
     private String pathName;
     private boolean visible = true;
+    private boolean rotated = false;
 
     public Card(String name, int value, char color ) {
         this.name = name;
@@ -16,6 +17,10 @@ public class Card {
     public void changeVisibility() {
         if (visible) visible = false;
         else visible = true;
+    }
+
+    public void rotate() {
+        rotated = true;
     }
 
     public String toString() {
@@ -56,5 +61,9 @@ public class Card {
 
     public boolean getVisible() {
         return visible;
+    }
+
+    public boolean getRotated() {
+        return rotated;
     }
 }

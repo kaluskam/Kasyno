@@ -1,17 +1,9 @@
 package casino;
 
-import casino.machine.BlackJack.BlackJack;
-import casino.machine.Machine;
-import java.util.regex.Pattern;
+import casino.machine.BlackJack.BlackJack2;
 
 import java.io.*;
 
-import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
-
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -57,18 +49,34 @@ public class Casino {
     }
 
     public void refreshPlayer(Player player) throws IOException {
-        Path FILE_PATH = Paths.get("src/casino/PlayersBase");
-        List<String> fileContent = new ArrayList<>(Files.readAllLines(FILE_PATH, StandardCharsets.UTF_8));
+        try {
+            File inputFile = new File("src/casino/PlayersBase");
+            File tempFile = new File("tempFile.txt");
 
-        for (int i = 0; i < fileContent.size(); i++) {
-            if (fileContent.get(i).equals(player.getNickName() + " " + "(.*)")) {
-                fileContent.set(i, player.toString());
-                break;
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+            String currentLine;
+            while ((currentLine = reader.readLine()) != null) {
+                String[] splittedLine = currentLine.split(" ");
+                if (splittedLine[0].equals(player.getNickName())) {
+                    writer.write(player.toString() + "\n");
+                    continue;
+                }
+                writer.write(currentLine + "\n");
             }
+            writer.close();
+            reader.close();
+            inputFile.delete();
+            tempFile.renameTo(inputFile);
+        } catch (FileNotFoundException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
         }
-
-        Files.write(FILE_PATH, fileContent, StandardCharsets.UTF_8);
+        catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
+
 
     public boolean checkIfInBase(Player player) {
         if (playerBase.size() == 0) return false;
@@ -85,7 +93,7 @@ public class Casino {
             totalTokens += bet;
             int leftTokens = player.getTokens();
             if (gameName.equals("BlackJack")) {
-                BlackJack game = new BlackJack(bet, leftTokens);
+                BlackJack2 game = new BlackJack2(bet, leftTokens);
                 return game;
             }
         }

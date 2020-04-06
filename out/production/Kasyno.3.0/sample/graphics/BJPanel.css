@@ -1,7 +1,7 @@
 .button {
     -fx-background-color: #980902;
     -fx-border-radius: 25px;
-    -fx-padding: 0pt;
+    -fx-padding: 5pt;
     -fx-text-fill: #fbc82c;
     -fx-font-family: Windlass;
     -fx-font-size: 20pt;

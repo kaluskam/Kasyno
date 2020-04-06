@@ -2,13 +2,12 @@ package sample;
 
 import casino.Casino;
 import casino.Player;
-import casino.machine.BlackJack.BJplayer;
-import casino.machine.BlackJack.BlackJack;
-import casino.machine.BlackJack.Card;
+import casino.machine.BlackJack.*;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.*;
@@ -16,8 +15,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -32,13 +35,11 @@ public class Main extends Application {
     private Casino casino = new Casino();
     private Stage window;
     private Player currentPlayer;
-    private BlackJack gameBJ;
+    private BlackJack2 gameBJ;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
-        window.setMinHeight(800);
-        window.setMinWidth(800);
 
         window.setScene(new Scene(new StackPane()));
 
@@ -77,13 +78,13 @@ public class Main extends Application {
                 mainCasino();
             }
             else {
-                gameBJ = (BlackJack) casino.startGame(currentPlayer, "BlackJack", bet);
+                gameBJ = (BlackJack2) casino.startGame(currentPlayer, "BlackJack", bet);
                 BorderPane layoutBP = new BorderPane();
                 Scene scene2 = new Scene(layoutBP);
                 layoutBP.setStyle("-fx-background-color: radial-gradient(center 50% 50%, radius 100%, #4c7a15, #2f4f09);");
                 BlackJackPanel(layoutBP, scene2);
-                if (gameBJ.isGameover()) {
-                    int prize = gameBJ.getPrize();
+                if (gameBJ.isGameOver()) {
+                    int prize = gameBJ.Prize();
                     if (casino.getTotalTokens() < prize) {
                         currentPlayer.addTokens(casino.getTotalTokens());
                         casino.subtractTokens(casino.getTotalTokens());
@@ -169,9 +170,14 @@ public class Main extends Application {
         hit.setOnAction(e -> {
             gameBJ.takeAction("H");
             //check whether game is still running
-            if (gameBJ.isGameover()) {
+            if (gameBJ.isGameOver()) {
                 gameBJ.dealerTurn();
-                dealerCards(layout, scene);
+                try {
+                    dealerCards(layout, scene);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
             }
             else {
                 BlackJackPanel(layout, scene);
@@ -184,9 +190,13 @@ public class Main extends Application {
             gameBJ.takeAction("S");
             //check whether game is still running
             //check whether game is still running
-            if (gameBJ.isGameover()) {
+            if (gameBJ.isGameOver()) {
                 gameBJ.dealerTurn();
-                dealerCards(layout, scene);
+                try {
+                    dealerCards(layout,scene);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
             else {
                 BlackJackPanel(layout, scene);
@@ -198,9 +208,13 @@ public class Main extends Application {
             gameBJ.takeAction("D");
             //check whether game is still running
             //check whether game is still running
-            if (gameBJ.isGameover()) {
+            if (gameBJ.isGameOver()) {
                 gameBJ.dealerTurn();
-                dealerCards(layout, scene);
+                try {
+                    dealerCards(layout, scene);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
             else {
                 BlackJackPanel(layout, scene);
@@ -212,9 +226,13 @@ public class Main extends Application {
             gameBJ.takeAction("P");
             //check whether game is still running
             //check whether game is still running
-            if (gameBJ.isGameover()) {
+            if (gameBJ.isGameOver()) {
                 gameBJ.dealerTurn();
-                dealerCards(layout, scene);
+                try {
+                    dealerCards(layout, scene);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
             else {
                 BlackJackPanel(layout, scene);
@@ -229,7 +247,7 @@ public class Main extends Application {
         canvas.setId("cards");
         layout.setCenter(canvas);
         buttonLayout.setAlignment(Pos.CENTER);
-        BorderPane.setMargin(buttonLayout, new Insets(0,0,50,0));
+        BorderPane.setMargin(buttonLayout, new Insets(0,0,50,20));
         layout.setBottom(buttonLayout);
 
         scene.setRoot(layout);
@@ -239,8 +257,8 @@ public class Main extends Application {
 
     private Canvas loadCards() {
         //Coordinates for player Interface
-        double width = window.getScene().getWidth();
-        double height = window.getScene().getHeight() - 100;
+        double width = 1000;
+        double height = 550;
         double cardHeight = height / 4;
         double cardWidth = cardHeight * 0.65;
         double space = cardWidth / 3;
@@ -249,57 +267,83 @@ public class Main extends Application {
         Canvas canvas = new Canvas(width, height);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        List<Card> dealerHand = gameBJ.getDealer().getHand();
-        Image[] handImage = new Image[gameBJ.getDealer().getHand().size()];
-        for (int i = 0; i < gameBJ.getDealer().getHand().size(); i++) {
+        Hand dealerHand = gameBJ.getDealer().getHands().get(0);
+        Image[] handImage = new Image[dealerHand.getHand().size()];
+        for (int i = 0; i < dealerHand.getHand().size(); i++) {
             // get image
-            String path = dealerHand.get(i).getPathName();
+            String path = dealerHand.getHand().get(i).getPathName();
             handImage[i] = new Image(path);
-            gc.drawImage(handImage[i], (width - handImage.length * (cardWidth + space) + space) / 2 + i * space, 10, cardWidth, cardHeight);
+            gc.drawImage(handImage[i], (width / 2) - (cardWidth / 2 - space * i), 10, cardWidth, cardHeight);
             gc.restore();
         }
 
-        List<BJplayer> playerHands = gameBJ.getPlayerHands();
-        List<Image[]> playerImage = new ArrayList<>();
-        for (BJplayer player: playerHands) {
-            Image[] hand = new Image[player.getHand().size()];
-            playerImage.add(hand);
-            for (int i = 0; i < player.getHand().size(); i++) {
-                String path = player.getHand().get(i).getPathName();
+        List<Hand> playerHands = gameBJ.getPlayer().getHands();
+        int howMany = playerHands.size();
+        int j = 1;
+        ColorAdjust colorAdjust = new ColorAdjust();
+        colorAdjust.setBrightness(-0.5);
+
+        for (Hand curHand: playerHands) {
+            Image[] hand = new Image[curHand.getHand().size()];
+            Image image = null;
+
+            for (int i = 0; i < curHand.getHand().size(); i++) {
+                String path = curHand.getHand().get(i).getPathName();
                 hand[i] = new Image(path);
-                gc.drawImage(hand[i], (width - handImage.length * (cardWidth + space) + space) / 2 + i * space, height - 200 - i * space, cardWidth, cardHeight );
+                ImageView imageView = new ImageView(hand[i]);
+                SnapshotParameters params = new SnapshotParameters();
+                params.setFill(Color.TRANSPARENT);
+                double thisCardHeight = cardHeight;
+                double thisCardWidth = cardWidth;
+
+                if (!curHand.isTurn()) {
+                    imageView.setEffect(colorAdjust);
+                }
+
+                if (curHand.getHand().get(i).getRotated()) {
+                    imageView.setRotate(90);
+                    thisCardHeight = cardWidth;
+                    thisCardWidth = cardHeight;
+                }
+
+                image = imageView.snapshot(params, null);
+                double widthForEach = j * width/(howMany + 1);
+                gc.drawImage(image, widthForEach - cardWidth/2 + i*space, height - 200 - i * space,
+                        thisCardWidth, thisCardHeight );
                 gc.restore();
+                }
+            j++;
             }
-
-        }
         return canvas;
-
     }
 
-    private void dealerCards(BorderPane layout, Scene scene) {
+
+
+    private void dealerCards(BorderPane layout, Scene scene) throws IOException {
         double width = window.getScene().getWidth();
-        double height = window.getScene().getHeight();
+        double height = window.getScene().getHeight() - layout.getBottom().getScene().getHeight();
         // show dealer's fisrt card
-        gameBJ.getDealer().getHand().get(0).changeVisibility();
+        gameBJ.getDealer().getHands().get(0).getHand().get(0).changeVisibility();
 
         Button newGame = new Button("New Game");
         Button backToMenu = new Button("Back to Menu");
         String message = "";
 
-        gameBJ.countPrize();
-        final int[] prize = {gameBJ.getPrize()};
+        int prize = gameBJ.Prize();
 
-        if (prize[0] != 0) {
-            message = "You have won" + String.valueOf(prize[0]);
-            if (casino.getTotalTokens() < prize[0]) {
+        if (prize != 0) {
+            message = "You have won" + String.valueOf(prize);
+            if (casino.getTotalTokens() < prize) {
                 currentPlayer.addTokens(casino.getTotalTokens());
                 casino.subtractTokens(casino.getTotalTokens());
             }
             else {
-                currentPlayer.addTokens(prize[0]);
-                casino.subtractTokens(prize[0]);
+                currentPlayer.addTokens(prize);
+                casino.subtractTokens(prize);
             }
         }
+        casino.refreshPlayer(currentPlayer);
+
 
         newGame.setOnAction(e -> {
             int bet = askforBet();
@@ -307,20 +351,20 @@ public class Main extends Application {
                 mainCasino();
             }
             else {
-                gameBJ = (BlackJack) casino.startGame(currentPlayer, "BlackJack", bet);
+                gameBJ = (BlackJack2) casino.startGame(currentPlayer, "BlackJack", bet);
                 BorderPane layoutBP = new BorderPane();
                 Scene scene2 = new Scene(layoutBP);
                 layoutBP.setStyle("-fx-background-color: radial-gradient(center 50% 50%, radius 100%, #4c7a15, #2f4f09);");
                 BlackJackPanel(layoutBP, scene2);
-                if (gameBJ.isGameover()) {
-                    prize[0] = gameBJ.getPrize();
-                    if (casino.getTotalTokens() < prize[0]) {
+                if (gameBJ.isGameOver()) {
+                    int prize2 = gameBJ.Prize();
+                    if (casino.getTotalTokens() < prize2) {
                         currentPlayer.addTokens(casino.getTotalTokens());
                         casino.subtractTokens(casino.getTotalTokens());
                     }
                     else {
-                        currentPlayer.addTokens(prize[0]);
-                        casino.subtractTokens(prize[0]);
+                        currentPlayer.addTokens(prize2);
+                        casino.subtractTokens(prize2);
                     }
                 }
             }
@@ -336,8 +380,7 @@ public class Main extends Application {
         buttonLayout.getChildren().addAll(newGame, backToMenu);
 
         Canvas canvas = loadCards();
-        //GraphicsContext gc = canvas.getGraphicsContext2D();
-        //gc.strokeText(message, height - 400, width - 300, 60);
+
         canvas.setId("cards");
         layout.setCenter(canvas);
         buttonLayout.setAlignment(Pos.CENTER);
@@ -349,35 +392,39 @@ public class Main extends Application {
         window.show();
     }
 
-
-
     private void loginDialog() {
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(10, 50, 50, 50));
 
+        borderPane.getStylesheets().add(getClass().getResource("graphics/loginDialog.css").toExternalForm());
         //Add Hbox
         HBox hBox = new HBox(10);
         hBox.setPadding(new Insets(20, 20, 20, 30));
 
+
         //Add GridPane
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(20, 20, 20, 20));
-        gridPane.setVgap(5);
-        gridPane.setHgap(5);
+        gridPane.setVgap(15);
+        gridPane.setHgap(15);
+
+        StackPane stackPane = new StackPane();
 
         //implement Nodes for GridPane
-        Label username = new Label("Username");
+        Label username = new Label("USERNAME");
         TextField txtUsername = new TextField();
         Button btnLogin = new Button("Login");
         Label message = new Label();
         Button btnRegister = new Button("Sing Up");
 
+
+        HBox hbox2 = new HBox(15);
+        hbox2.getChildren().addAll(btnLogin, btnRegister);
+
         //add Nodes to GridPane layout
         gridPane.add(username, 0, 0);
         gridPane.add(txtUsername, 1, 0);
-        gridPane.add(btnLogin, 0, 1);
-        gridPane.add(message, 1, 2);
-        gridPane.add(btnRegister, 1, 1);
+        gridPane.add(hbox2, 1, 1);
 
         //Action for btnLogin
         final String[] checkUser = new String[1];
@@ -386,7 +433,8 @@ public class Main extends Application {
             String user = checkUser[0];
             Player player = new Player(user, 0, 0);
             if (!casino.checkIfInBase(player)) {
-                System.out.println("You need to register.");
+                message.setText("You need to register.");
+                stackPane.getChildren().add(message);
             }
             else {
                 currentPlayer = casino.getPlayer(user);
@@ -402,9 +450,10 @@ public class Main extends Application {
         //Add HBox and GridPane layout to BorderPane
         borderPane.setTop(hBox);
         borderPane.setCenter(gridPane);
+        borderPane.setBottom(stackPane);
 
         //Add BorderPane to scene
-        Scene scene = new Scene(borderPane);
+        Scene scene = new Scene(borderPane, 500,200);
         window.setScene(scene);
         window.show();
     }
@@ -413,6 +462,7 @@ public class Main extends Application {
         BorderPane borderPane = new BorderPane();
         borderPane.setPadding(new Insets(10, 50, 50, 50));
 
+        borderPane.getStylesheets().add(getClass().getResource("graphics/loginDialog.css").toExternalForm());
         //Add Hbox
         HBox hBox = new HBox(10);
         hBox.setPadding(new Insets(20, 20, 20, 30));
@@ -429,6 +479,8 @@ public class Main extends Application {
         Label lblMoney = new Label("Your money");
         TextField txtUserMoney = new TextField();
         Button btnRegister = new Button("Sing Up");
+
+        StackPane stackPane = new StackPane();
         Label message = new Label();
 
         //add Nodes to GridPane layout
@@ -449,7 +501,7 @@ public class Main extends Application {
             Player player = new Player(user, money, 0);
             if (casino.checkIfInBase(player)) {
                 message.setText("This name has been already taken.");
-                gridPane.add(message, 2,2);
+                stackPane.getChildren().add(message);
             }
             else {
                 try {
@@ -465,9 +517,10 @@ public class Main extends Application {
         //Add HBox and GridPane layout to BorderPane
         borderPane.setTop(hBox);
         borderPane.setCenter(gridPane);
+        borderPane.setBottom(stackPane);
 
         //Add BorderPane to scene
-        Scene scene = new Scene(borderPane);
+        Scene scene = new Scene(borderPane, 500, 250);
         window.setScene(scene);
         window.show();
     }

@@ -1,8 +1,5 @@
 package casino.machine;
 
-import casino.Casino;
-import casino.machine.BlackJack.BlackJack;
-
 public class Machine {
     private int tokens = 1000;
     private boolean ON = false;

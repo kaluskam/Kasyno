@@ -1,0 +1,27 @@
+.root {
+    -fx-background-color: radial-gradient(center 50% 50%, radius 100%, #c74016, #980902);
+}
+
+.label {
+    -fx-font-family: Windlass;
+    -fx-font-size: 15pt;
+    -fx-text-fill: #fbc82c;
+}
+
+.text-field {
+     -fx-background-color: radial-gradient(center 50% 50%, radius 100%, #ffffff, #edb985);
+     -fx-text-fill: #40190b;
+     -fx-font-family: Windlass;
+     -fx-font-size: 15pt;
+     -fx-max-width: 160pt;
+     -fx-min-height: 30pt;
+ }
+
+.button {
+     -fx-background-color: radial-gradient(center 50% 50%, radius 100%, #ffffff, #edb985);
+     -fx-text-fill: #40190b;
+     -fx-font-family: Windlass;
+     -fx-font-size: 12pt;
+     -fx-min-width: 75pt;
+     -fx-min-height: 30pt;
+ }
